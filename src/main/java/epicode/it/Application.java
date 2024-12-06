@@ -15,6 +15,7 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -40,6 +41,7 @@ public class Application {
         System.out.println("=> 6. Search publication by year");
         System.out.println("=> 7. Search publication by author");
         System.out.println("=> 8. Show number of active loans by card number");
+        System.out.println("=> 9. Search all expired loans and not yet returned");
         System.out.println();
         System.out.println("Select an option:");
 
@@ -346,6 +348,20 @@ public class Application {
         }
     }
 
+    public static void searchExpired() {
+        LocalDate date = LocalDate.now();
+        List<Loan> expiredLoans = loanDAO.findAllExpired(date);
+        if (expiredLoans.size() > 0) {
+            System.out.println("List of expired loans:");
+            for (Loan loan : expiredLoans) {
+                System.out.println(loan);
+            }
+            System.out.println("==================================================");
+        } else {
+            System.out.println("No expired loans found.");
+        }
+    }
+
     public static void main(String[] args) {
 
         boolean exit = false;
@@ -362,6 +378,7 @@ public class Application {
                     case 6 -> searchPublicationsByYear();
                     case 7 -> searchPublicationsByAuthor();
                     case 8 -> showNumberOfActiveLoansByCardNumber();
+                    case 9 -> searchExpired();
                     case 0 -> {
                         System.out.println("Exiting program...");
                         exit = true;

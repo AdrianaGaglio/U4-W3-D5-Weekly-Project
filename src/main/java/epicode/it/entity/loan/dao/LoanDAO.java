@@ -5,6 +5,7 @@ import epicode.it.entity.publication.Publication;
 import jakarta.persistence.EntityManager;
 import lombok.AllArgsConstructor;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @AllArgsConstructor
@@ -49,5 +50,10 @@ public class LoanDAO {
     public Loan getByPublicationId(Publication publication) {
         return em.createNamedQuery("findByPublicationId", Loan.class)
                 .setParameter("publication", publication).getResultStream().findFirst().orElse(null);
+    }
+
+    public List<Loan> findAllExpired(LocalDate date) {
+        return this.em.createNamedQuery("findExpiredLoans", Loan.class)
+                .setParameter("date", date).getResultList();
     }
 }

@@ -15,7 +15,7 @@ import java.util.List;
 @Entity
 @NamedQuery(name = "findAll_Loan", query = "SELECT a FROM Loan a")
 @NamedQuery(name = "findByPublicationId", query = "SELECT a FROM Loan a WHERE a.publication = :publication")
-
+@NamedQuery(name = "findExpiredLoans", query = "SELECT a FROM Loan a WHERE a.expectedReturnDate < :date AND a.actualReturnDate IS NULL")
 @Table(name="loans")
 public class Loan {
     @Id
