@@ -13,6 +13,7 @@ import java.util.Random;
 @Data
 @Entity
 @NamedQuery(name = "findAll_User", query = "SELECT a FROM User a")
+@NamedQuery(name = "findUserByCardNumber", query="SELECT a FROM User a WHERE a.cardNumber = :cardNumber")
 @NamedQuery(name = "findByCardNumberWithLoans", query = "SELECT u, l FROM User u JOIN u.loans l WHERE u.cardNumber = :cardNumber AND l.actualReturnDate IS NULL")
 @Table(name="users")
 public class User {

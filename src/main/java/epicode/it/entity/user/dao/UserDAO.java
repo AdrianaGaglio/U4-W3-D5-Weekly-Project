@@ -47,6 +47,11 @@ public class UserDAO {
         em.getTransaction().commit();
     }
 
+    public User getByCardNumber(String cardNumber) {
+        return em.createNamedQuery("findUserByCardNumber", User.class)
+                .setParameter("cardNumber", cardNumber).getSingleResult();
+    }
+
     public List<Object[]> findLoansByUser(String cardNumber) {
         TypedQuery<Object[]> query = em.createNamedQuery("findByCardNumberWithLoans", Object[].class)
                 .setParameter("cardNumber", cardNumber);
