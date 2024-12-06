@@ -1,5 +1,6 @@
-package epicode.it.entity.loan;
+package epicode.it.entity.loan.dao;
 
+import epicode.it.entity.loan.Loan;
 import epicode.it.entity.publication.Publication;
 import jakarta.persistence.EntityManager;
 import lombok.AllArgsConstructor;

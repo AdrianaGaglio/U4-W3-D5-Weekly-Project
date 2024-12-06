@@ -3,6 +3,7 @@ package epicode.it.entity.user;
 import epicode.it.entity.loan.Loan;
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.ToString;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -12,6 +13,7 @@ import java.util.Random;
 @Data
 @Entity
 @NamedQuery(name = "findAll_User", query = "SELECT a FROM User a")
+@NamedQuery(name = "findByCardNumberWithLoans", query = "SELECT u, l FROM User u JOIN u.loans l WHERE u.cardNumber = :cardNumber AND l.actualReturnDate IS NULL")
 @Table(name="users")
 public class User {
 
@@ -46,5 +48,6 @@ public class User {
     private String cardNumber = generateRandomCard(16);
 
     @OneToMany(mappedBy = "user")
+    @ToString.Exclude
     private List<Loan> loans = new ArrayList<>();
 }

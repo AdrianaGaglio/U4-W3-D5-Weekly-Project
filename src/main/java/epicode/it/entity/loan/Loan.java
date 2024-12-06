@@ -4,6 +4,7 @@ import epicode.it.entity.publication.Publication;
 import epicode.it.entity.user.User;
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.ToString;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -14,6 +15,7 @@ import java.util.List;
 @Entity
 @NamedQuery(name = "findAll_Loan", query = "SELECT a FROM Loan a")
 @NamedQuery(name = "findByPublicationId", query = "SELECT a FROM Loan a WHERE a.publication = :publication")
+
 @Table(name="loans")
 public class Loan {
     @Id
@@ -25,6 +27,7 @@ public class Loan {
 
     @OneToOne
     @JoinColumn(name = "publication_id")
+    @ToString.Exclude
     private Publication publication;
 
     @Column(name = "start_date")

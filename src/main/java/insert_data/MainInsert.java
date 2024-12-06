@@ -4,7 +4,7 @@ import com.github.javafaker.Faker;
 import epicode.it.entity.book.Book;
 import epicode.it.entity.book.dao.BookDAO;
 import epicode.it.entity.loan.Loan;
-import epicode.it.entity.loan.LoanDAO;
+import epicode.it.entity.loan.dao.LoanDAO;
 import epicode.it.entity.magazine.Magazine;
 import epicode.it.entity.magazine.Periodicity;
 import epicode.it.entity.magazine.dao.MagazineDAO;
@@ -16,6 +16,7 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
 
+import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
@@ -76,11 +77,13 @@ public class MainInsert {
             User user = userDAO.getById(faker.random().nextInt(1, 100).longValue());
             loan.setUser(user);
             userDAO.update(user);
-            loan.setStartDate(faker.date().past(365, TimeUnit.DAYS).toInstant()
+            loan.setStartDate(faker.date().past(730, TimeUnit.DAYS).toInstant()
                     .atZone(ZoneId.systemDefault())
                     .toLocalDate());
             loan.setExpectedReturnDate(loan.getStartDate().plusDays(30));
-            loan.setActualReturnDate(loan.getStartDate().plusDays(faker.random().nextInt(1, 30)));
+            LocalDate date = loan.getStartDate().plusDays(faker.random().nextInt(1, 365));
+            LocalDate dateNow = LocalDate.now();
+            loan.setActualReturnDate(date.isAfter(dateNow) ? null : date);
             while (true) {
                 Publication publication = publicationDAO.getById(faker.random().nextInt(1, 100).longValue());
                 Loan found = loanDAO.getByPublicationId(publication);

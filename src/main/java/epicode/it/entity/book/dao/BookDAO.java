@@ -3,6 +3,7 @@ package epicode.it.entity.book.dao;
 import epicode.it.entity.book.Book;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.TypedQuery;
 import lombok.AllArgsConstructor;
 
 import java.util.List;
@@ -43,5 +44,15 @@ public class BookDAO {
         em.getTransaction().begin();
         em.remove(book);
         em.getTransaction().commit();
+    }
+
+    public List<Book> getByAuthor(String author) {
+        return this.em.createNamedQuery("findByAuthor", Book.class).setParameter("author", author).getResultList();
+    }
+
+    public List<Object[]> getByGenre() {
+        TypedQuery<Object[]> query = em.createNamedQuery("groupByGenre", Object[].class);
+        List<Object[]> results = query.getResultList();
+        return results;
     }
 }

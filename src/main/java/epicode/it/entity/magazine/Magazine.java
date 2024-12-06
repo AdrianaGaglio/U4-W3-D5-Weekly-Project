@@ -12,4 +12,16 @@ public class Magazine extends Publication {
     @Enumerated(EnumType.STRING)
     private Periodicity periodicity;
 
+    @Override
+    public String toString() {
+        return "Magazine{" +
+                "id='" + this.getId() + '\'' +
+                ", ISBN='" + this.getISBN() + '\'' +
+                ", title='" + this.getTitle() + '\'' +
+                ", periodicity=" + periodicity +
+                ", year='" + this.getYear() + '\'' +
+                ", pages='" + this.getPages() + '\'' +
+                ", loan='" + this.getLoan() + '\'' +
+                '}';
+    }
 }

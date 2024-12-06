@@ -1,8 +1,10 @@
 package epicode.it.entity.user.dao;
 
+import epicode.it.entity.loan.Loan;
 import epicode.it.entity.user.User;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.TypedQuery;
 import lombok.AllArgsConstructor;
 
 import java.util.List;
@@ -43,5 +45,12 @@ public class UserDAO {
         em.getTransaction().begin();
         em.remove(user);
         em.getTransaction().commit();
+    }
+
+    public List<Object[]> findLoansByUser(String cardNumber) {
+        TypedQuery<Object[]> query = em.createNamedQuery("findByCardNumberWithLoans", Object[].class)
+                .setParameter("cardNumber", cardNumber);
+        List<Object[]> results = query.getResultList();
+        return results;
     }
 }

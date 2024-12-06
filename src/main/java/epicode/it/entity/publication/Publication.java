@@ -8,7 +8,10 @@ import java.util.Random;
 
 @Data
 @Entity
-@NamedQuery(name = "findAll_Publication", query = "SELECT a FROM Publication a")
+@NamedQuery(name = "findAll_Publication", query = "SELECT a FROM Publication a ORDER BY id")
+@NamedQuery(name = "findByISBN", query = "SELECT a FROM Publication a WHERE a.ISBN = :ISBN")
+@NamedQuery(name = "findByYear", query = "SELECT a FROM Publication a WHERE a.year = :year")
+@NamedQuery(name = "findByTitle", query="SELECT a FROM Publication a WHERE a.title = :title OR a.title LIKE CONCAT('%', :title, '%')")
 @Table(name = "publications")
 @Inheritance(strategy = InheritanceType.JOINED)
 abstract public class Publication {
